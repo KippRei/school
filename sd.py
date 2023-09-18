@@ -22,4 +22,3 @@ print(standDevSum)
 standDev = math.sqrt(standDevSum)
 
 print("Standard Deviation: ", standDev)
-#test
