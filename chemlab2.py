@@ -32,7 +32,7 @@ average = averagePress / n
 stdDev = 0
 for i in methanolPressure:
     stdDev += abs(i - average)
-stdDev /= (n * average) * 100
+stdDev = (stdDev * 100) / (n * average) 
 
 print("Mass | Moles | Mole Fraction | Exp Pressure")
 for mass, mole, molef, exppress in zip(mass, moles, moleFrac, methanolPressure):
