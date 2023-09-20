@@ -39,3 +39,4 @@ for mass, mole, molef, exppress in zip(mass, moles, moleFrac, methanolPressure):
     print(mass, " ", mole, " ", molef, " ", exppress)
 print("Average = ", average)
 print("Percent Relative Standard Deviation = ", stdDev)
+print("Error Percent = ", ((average - 13.02)/13.02) * 100)
