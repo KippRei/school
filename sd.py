@@ -1,7 +1,7 @@
 ## Calculate Standard Deviation of Data Set
 import math
 
-dataPoints = input("Insert Data Points Seprated By Comma: ")
+dataPoints = input("Insert Data Points Seperated By Comma: ")
 dataList = dataPoints.split(',')
 
 sumOfData = 0
