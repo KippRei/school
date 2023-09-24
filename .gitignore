@@ -1,0 +1,9 @@
+#Ignore pyinstaller files
+*.toc
+*.spec
+*.zip
+*.txt
+*.html
+*.pyc
+*.pkg
+*.pyz
