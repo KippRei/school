@@ -3,7 +3,7 @@ validCalc = "ADD", "SUBTRACT", "MULTIPLY", "DIVIDE", "A", "S", "M", "D"
 
 #Get two numbers from user and split/cast to float into variables
 def Get2Numbers():
-    numbers = input("Please enter two numbers: ")
+    numbers = input("Please enter two numbers (seperated by space): ")
     firstNum, secondNum = [float(x) for x in numbers.split()]
     return firstNum, secondNum
 
@@ -42,4 +42,4 @@ while True:
         DoCalc(firstNum, secondNum, calcType)
         break
     except Exception:
-        print("I'm sorry, that's an invalid input.")
+        print("Invalid input, please try again.")
