@@ -1,9 +1,7 @@
-import sys #used to allow KeyboardInterrupt exit from While - Try/Except loop because Ctrl+C was not working in the program loop
-
 #This is a list of valid inputs for calcType (Type of calculation) to check against input
 validCalc = "ADD", "SUBTRACT", "MULTIPLY", "DIVIDE", "A", "S", "M", "D"
 
-#Get two numbers from user
+#Get two numbers from user and split/cast to float into variables
 def Get2Numbers():
     numbers = input("Please enter two numbers: ")
     firstNum, secondNum = [float(x) for x in numbers.split()]
@@ -12,7 +10,7 @@ def Get2Numbers():
 #Get calculation type from user
 #NOTE: Used While loop here because:
 ## 1) I didn't want the user to have re-input numbers if an input mistake was made
-## 2) Because it's always a string input from console, I don't have to worry about type errors when checking it against my valid inputs list
+## 2) It's always a string input from console, I don't have to worry about type errors when checking it against my valid inputs list
 def GetCalcType():
     while True:
         calcType = input("Calculation Type? (Add (a), Subtract (s), Multiply (m), or Divide (d)): ").upper()
@@ -25,7 +23,6 @@ def GetCalcType():
 
 #Perform calculation and print result
 def DoCalc(firstNum, secondNum, calculation):
-    
     if calculation == "ADD" or calculation == "A":
         print(str(firstNum) + " + " + str(secondNum) + " = " + str(firstNum + secondNum))
     elif calculation == "SUBTRACT" or calculation == "S":
@@ -44,7 +41,5 @@ while True:
         calcType = GetCalcType()
         DoCalc(firstNum, secondNum, calcType)
         break
-    except KeyboardInterrupt:
-        sys.exit(0)
-    except:
+    except Exception:
         print("I'm sorry, that's an invalid input.")
