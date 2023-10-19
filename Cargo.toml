@@ -1,0 +1,6 @@
+[workspace]
+
+members = [
+	"rustprac/fstring",
+	"rustprac/practice",
+]
