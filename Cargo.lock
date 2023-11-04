@@ -9,3 +9,7 @@ version = "0.1.0"
 [[package]]
 name = "practice"
 version = "0.1.0"
+
+[[package]]
+name = "tri_area"
+version = "0.1.0"
