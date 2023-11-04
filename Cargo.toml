@@ -3,4 +3,5 @@
 members = [
 	"rustprac/fstring",
 	"rustprac/practice",
+	"./cs117/rust117/tri_area",
 ]

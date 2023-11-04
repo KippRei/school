@@ -1,6 +1,37 @@
+#TODO: fix: do not want geneTrait as global variable
+geneTrait = {}
+
 def main():
+    addKey = input("Would you like to enter a key (y/n)?: ")
+    if addKey.upper() == 'Y':
+        print("Enter gene letter followed by trait (separated by space)")
+        print("(Type zz when done)")
+
+        while True:
+            getT = input("Gene & Trait: ")
+            if getT == "zz":
+                break
+            getT = getT.split()
+            letterVal = getT[0]
+            traitVal = getT[1]
+            geneTrait[letterVal] = traitVal
+            getOtherT = input("For {}?: ".format(letterVal.swapcase()))
+            geneTrait[letterVal.swapcase()] = getOtherT
+
     p1 = input("Input P1 Genotype: ")
     p2 = input("Input P2 Genotype: ")
+
+    # Uncomment for testing
+    '''
+    p1 = "AaBb"
+    p2 = "aabb"
+    geneTrait["A"] = "blue"
+    geneTrait["a"] = "brown"
+    geneTrait["B"] = "curly"
+    geneTrait["b"] = "straight"
+    '''
+    # End of testing
+
     comboArr = []
 
     if len(p1) != len(p2):
@@ -91,10 +122,8 @@ def main():
 
 
 def DataCalc(data):
-    print("F1 Genotype:")
-    DictPrint(data)
+    totalGenes = 0
 
-    print("F1 Phenotype: ")
     alleleLength = len(list(data.keys())[0]) #get length of allele
     phenoDict = {} #dict to store key val pairs of phenotypes
     for key, val in data.items():
@@ -108,16 +137,37 @@ def DataCalc(data):
             phenoDict[phenoKey] += val
         else:
             phenoDict[phenoKey] = val
+        totalGenes += val
 
-    DictPrint(phenoDict)
+
+    print("\nF1 Genotype")
+    print("------------")
+    DictPrint(data, totalGenes)
+
+    print("F1 Phenotype")
+    print("------------")
+    if len(geneTrait) == 0:
+        DictPrint(phenoDict, totalGenes)
+    else:
+        PhenoPrint(phenoDict, totalGenes)
 
 
-def DictPrint(dict):
+def DictPrint(dict, totalGenes):
     strToPrint = ""
     for key, val in dict.items():
-        strToPrint += str(val) + " " + str(key) + "\n"
+        strToPrint += str(val) + "/" + str(totalGenes) + " " + str(key) + "\n"
     print(strToPrint)
 
+
+def PhenoPrint(dict, totalGenes):
+    strToPrint = ""
+    for key, val in dict.items():
+        traits = ""
+        for i in list(key):
+            if i in geneTrait:
+                traits += geneTrait[i] + " "
+        strToPrint += str(val) + "/" + str(totalGenes) + " " + traits + "\n"
+    print(strToPrint)
 
 def DebugPrint(toPrint):
     #print(toPrint)
