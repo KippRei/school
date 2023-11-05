@@ -4,15 +4,15 @@ function CalculateF1() {
     let dom = document.getElementById("DomType").value;
     
     let zeroCheck = p1Genotype.length !=0 && p2Genotype.length != 0;
-    let inputCheck = p1Genotype.length % 2 == 0;
+    let lengthCheck = p1Genotype.length % 2 == 0;
     let inputMatch = p1Genotype.length == p2Genotype.length;
     let locusCheck = true;
 
-    if (zeroCheck && inputCheck && inputMatch) {
+    if (zeroCheck && lengthCheck && inputMatch) {
         locusCheck = LocusCheck(p1Genotype, p2Genotype);
     }
 
-    if (zeroCheck && inputCheck && inputMatch && locusCheck) {
+    if (zeroCheck && lengthCheck && inputMatch && locusCheck) {
         let singleAlleles = CombineAlleles(p1Genotype, p2Genotype);
         let F1 = F1Genotypes(singleAlleles);
 
@@ -20,7 +20,7 @@ function CalculateF1() {
     }
     else {
         let errorMsg = "";
-        if (!inputCheck || !zeroCheck) {errorMsg = "Improper allele length"}
+        if (!lengthCheck || !zeroCheck) {errorMsg = "Improper allele length"}
         else if (!inputMatch) {errorMsg = "Allele lengths do not match"}
         else if (!locusCheck) {errorMsg = "Gene loci error"}
 
