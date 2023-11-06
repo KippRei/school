@@ -3,7 +3,6 @@
 *.spec
 *.zip
 *.txt
-*.html
 *.pyc
 *.pkg
 *.pyz
