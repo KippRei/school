@@ -1,157 +1,91 @@
 // Introductory comments: Marques Kipp Reitzel, CS 117, Sections 17136 & 17137
 
-// Program name: FindLowestSale.
+// Program name: TriangleArea.
 
-// Description: Using list of salespeople (default or from file), ask user for total yearly sales amount then compare and return the name and sales amount of the salesperson/salespeople with the lowest yearly sales.
+// Description: Ask for base and height values from user and calculate triangle area
 
-// Usage: ./FindLowestSale
-// Usage: ./FindLowestSale <salesperson names filepath>
-
-// Program Name submitted to Canvas: Reitzel_Marques_FindLowestSale
+// Program Name submitted to Canvas: Reitzel_Marques_TriangleArea
 
 
 #include <iostream>
 #include <iomanip>
-#include <map>
 #include <string>
-#include <fstream>
-#include <vector> 
-#include <limits>
-#include <stdlib.h>
 
-using std::string;
 using std::cout;
+using std::endl;
 using std::cin;
-using std::map;
-using std::ifstream;
-using std::vector;
+using std::setw;
+using std::string;
 
-double getSalesAmt(string);
-void findLowest(const map<string, double>&);
-vector<string> getSalesNamesFromFile(const string);
-vector<string> getSalesNamesDefault();
+double getHeight();
+double getBase();
+double getArea(double, double);
+void displayData( double, double, double);
 double checkInput(string);
 
-int main(int argc, char *argv[]) {
-    vector<string> salesNames; // create vector (dynamic array) to hold list of salespeople's names
-
-    // if argc is >1 then the user has entered a filepath name for file that contains names of salespeople or -h for help
-    if (argc > 1) {
-      string arg1 = argv[1];
-      
-      if (arg1.compare("-h") == 0) {
-        cout << "Usage: ./FindLowestSale\n";
-        cout << "Usage: ./FindLowestSale <filename>\n";
-        std::exit(0);
-      }
-      else {
-        salesNames = getSalesNamesFromFile(arg1);
-      }
-    }
-    else{
-        salesNames = getSalesNamesDefault();
-    }
-
-    map<string, double> salesRecords; // create map to hold {salesperson name, total sales} pairs
-    for (int i = 0; i < salesNames.size(); i++) {
-        string salesPerson = salesNames[i];
-        double salesAmt = getSalesAmt(salesPerson);
-        salesRecords[salesPerson] = salesAmt;
-    }
-
-    findLowest(salesRecords);
+int main() {
+    double base = getBase();
+    double height = getHeight();
+    double area = getArea(height, base);
+    displayData(height, base, area);
 }
 
 
-// Loops through salespeople and gets total amount of sales (user input) and validates
-double getSalesAmt(string name) {
-    double amt = 0;
-  
-    while (amt <= 0) {
-        string userInput = "";
-        cout << "How much is the sales amount for: " << std::setw(10) << std::left << name << "$";
-        getline(cin, userInput);
-      
-        double validatedInput = checkInput(userInput);
-        if (validatedInput) {
-            amt = validatedInput;
-            if (amt <= 0) {
-                cout << "The sales amount must be a positive number.\n";
-            }
+// Get height value from user, validates and returns value
+double getHeight() {
+    string height = "";
+    double dHeight = 0;
+    while (dHeight <= 0) {
+        cout << "Enter height: ";
+        getline(cin, height);
+        dHeight = checkInput(height);
+        if (dHeight <= 0) {
+            cout << "Please enter a positive number.\n";
         }
-        else {
-            cout << "Invalid input, please enter a number only.\n";
-        }       
     }
-  
-    return amt;
+    return dHeight;
 }
 
 
-// Takes map (key=salesperson name, value=total sales) as argument
-// Sets initial lowest sales amount to max double value
-// Instantiate iterator to loop through key-value pairs and check against lowest sale amount
-void findLowest(const map<string, double> &salesRecords) {
-    double lowestSaleAmt = std::numeric_limits<double>::max();
-    string lowestSalesName = "";
-
-    for (map<string, double>::const_iterator c_iter = salesRecords.begin(); c_iter != salesRecords.end(); c_iter++) {
-        if (c_iter -> second < lowestSaleAmt) {
-            lowestSaleAmt = c_iter -> second;
-            lowestSalesName = c_iter -> first;
-        }
-        else if (c_iter -> second == lowestSaleAmt) {
-            lowestSalesName += ", " + c_iter -> first;
+// Get base value from user, validates and returns value
+double getBase() {
+    string base = "";
+    double dBase = 0;
+    while (dBase <= 0) {
+        cout << "Enter base: ";
+        getline(cin, base);
+        dBase = checkInput(base);
+        if (dBase <= 0) {
+            cout << "Please enter a positive number.\n";
         }
     }
-  
+    return dBase;
+}
+
+
+// Takes height and base and returns area of triangle
+double getArea(double h, double b) {
+    return (h * b * .5);
+}
+
+
+// Takes data and displays properly
+void displayData( double h, double b, double a) {
+    int rwidth = 12;
     cout << std::fixed << std::showpoint << std::setprecision(2);
-    cout << "\n" << lowestSalesName << " had the lowest number of reported sale(s) last year.\n\n";
-    cout << lowestSalesName << "'s reported amount was $" << lowestSaleAmt << ".\n";
+    cout << endl;
+    cout << "    Triangle's Area" << endl;
+    cout << "-----------------------" << endl;
+    cout << setw(10) << std::left << " Base: " << setw(rwidth) << std::right << b << endl;
+    cout << setw(10) << std::left << " Height: " << setw(rwidth) << std::right << h << endl;
+    cout << setw(10) << std::left << " Area: " << setw(rwidth) << std::right << a << endl;
+    cout << endl;
 }
 
 
-// Get salespeople's names from file and put in vector (dynamic array)
-// If file does not exist, return vector with default names
-vector<string> getSalesNamesFromFile(const string filePath) {
-    vector<string> salesNames;
-  
-    ifstream namesFile;
-    namesFile.open(filePath);
-  
-    if (namesFile.fail()) {
-        cout<<"Error opening file. Using default names list.\n";
-        salesNames = getSalesNamesDefault();
-    }
-    else {
-        string name = "";
-        while (namesFile >> name) {
-            salesNames.push_back(name);
-        }
-    }
-  
-    return salesNames;
-}
-
-
-// Use default salespeople name list
-vector<string> getSalesNamesDefault() {
-    vector<string> namesList = {
-        "David",
-        "John",
-        "Laura",
-        "Andy",
-        "Cathy"
-    };
-  
-    return namesList;
-}
-
-
-// Checks user input to ensure valid input (must be a positive number)
+// Checks user input to ensure valid input (must be a number)
 double checkInput(string userInput) {
     double validatedNum = 0;
-  
     try {
         size_t pos;
         validatedNum = std::stod(userInput, &pos);
