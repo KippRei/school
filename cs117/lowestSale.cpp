@@ -4,6 +4,7 @@
 #include <string>
 #include <fstream>
 #include <vector> 
+#include <limits>
 
 using std::string;
 using std::cout;
@@ -64,10 +65,10 @@ double getSalesAmt(string name) {
 // takes map (key=salesperson name, value=total sales) as argument
 // instantiate iterator to loop through key-value pairs and check against lowest sale amount
 void findLowest(const map<string, double> &salesRecords) {
-    string lowestSalesName = salesRecords.begin() -> first; // set initial lowest sales salesperson to first salesperson
-    double lowestSaleAmt = salesRecords.begin() -> second; // set initial lowest sale amount to first salesperson's sales amount
+    double lowestSaleAmt = std::numeric_limits<double>::max(); // set initial lowest sale amount to max double value
+    string lowestSalesName = "";
     for (map<string, double>::const_iterator c_iter = salesRecords.begin(); c_iter != salesRecords.end(); c_iter++) {
-        if (c_iter-> second < lowestSaleAmt) {
+        if (c_iter -> second < lowestSaleAmt) {
             lowestSaleAmt = c_iter -> second;
             lowestSalesName = c_iter -> first;
         }
