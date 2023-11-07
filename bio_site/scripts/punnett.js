@@ -20,12 +20,13 @@ function CalculateF1() {
     }
     else {
         let errorMsg = "";
-        if (!lengthCheck || !zeroCheck) {errorMsg = "Improper allele length"}
-        else if (!inputMatch) {errorMsg = "Allele lengths do not match"}
-        else if (!locusCheck) {errorMsg = "Gene loci error"}
+        if (!lengthCheck || !zeroCheck) {errorMsg = "Improper genotype length"}
+        else if (!inputMatch) {errorMsg = "Genotype lengths do not match"}
+        else if (!locusCheck) {errorMsg = "Genotype loci error"}
 
         let gResults = document.getElementById("GenoResults");
         let pResults = document.getElementById("PhenoResults");
+        gResults.style.color = 'red';
         gResults.innerHTML = `${errorMsg}, please try again`;
         pResults.innerHTML = "";
     }
@@ -69,11 +70,11 @@ function F1Genotypes(singleAlleles) {
             }
 
             f1Arr.push(f1TempAllele);
-            i += 2;
+            i += 2;   
+        }
 
-            if (i == currentArrLength) {
-                f1Arr.push(finalF1Arr[i]);
-            }
+        if (i == currentArrLength) {
+            f1Arr.push(finalF1Arr[i]);
         }
 
         finalF1Arr = f1Arr;
@@ -119,18 +120,21 @@ function DisplayResults(f1, dom) {
 
     let genotypeResults = "";
     genotypeMap.forEach((value, key) => {
-        genotypeResults += `<p>${key}: ${value}/${totalNumOfAlleles}</p>`;
+        let percent = (parseFloat(value)/parseFloat(totalNumOfAlleles) * 100).toFixed(2);
+        genotypeResults += `<p>${key}: ${value}/${totalNumOfAlleles} (${percent}%)</p>`;
     })
 
     let phenotypeResults = "";
     phenotypeMap.forEach((value, key) => {
-        phenotypeResults += `<p>${key}: ${value}/${totalNumOfAlleles}</p>`
+        let percent = (parseFloat(value)/parseFloat(totalNumOfAlleles) * 100).toFixed(2);
+        phenotypeResults += `<p>${key}: ${value}/${totalNumOfAlleles} (${percent}%)</p>`
     })
 
     let gResults = document.getElementById("GenoResults");
-    gResults.innerHTML = genotypeResults;
+    gResults.style.color = 'black';
+    gResults.innerHTML = "<p><u>Genotype Results</u></p>" + genotypeResults;
     let pResults = document.getElementById("PhenoResults");
-    pResults.innerHTML = phenotypeResults;
+    pResults.innerHTML = "<p><u>Phenotype Results</u></p>" + phenotypeResults;
 
 }
 
@@ -244,7 +248,7 @@ function PhenoCoDominance(alleleTypes) {
 function LocusCheck(p1, p2) {
     let ok = true;
     for (let i = 0; i < p1.length; i = i+2) {
-        if (p1[i].toUpperCase() != p1[i+1].toUpperCase() || p1[i].toUpperCase() != p2[i].toUpperCase()) {
+        if (p1[i].toUpperCase() != p1[i+1].toUpperCase() || p2[i].toUpperCase() != p2[i+1].toUpperCase() || p1[i].toUpperCase() != p2[i].toUpperCase()) {
             ok = false;
         }
     }
