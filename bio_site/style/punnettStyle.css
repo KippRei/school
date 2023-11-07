@@ -8,3 +8,15 @@
 }
 #PhenoResults {
 }
+
+@media only screen and (max-width: 600px) {
+    #wrapper {
+        width: 100%;
+    }
+    #GenoResults {
+        float:left; /* add this */
+    }
+    #PhenoResults {
+        float:left; /* add this */
+    }
+}
