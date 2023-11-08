@@ -130,6 +130,7 @@ vector<string> getSalesNamesFromFile(const string filePath) {
         }
     }
   
+    namesFile.close();
     return salesNames;
 }
 
