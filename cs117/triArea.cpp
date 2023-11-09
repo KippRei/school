@@ -21,7 +21,7 @@ double getHeight();
 double getBase();
 double getArea(double, double);
 void displayData( double, double, double);
-double checkInput(string);
+double stringToDouble(string);
 
 int main() {
     double base = getBase();
@@ -38,7 +38,7 @@ double getHeight() {
     while (dHeight <= 0) {
         cout << "Enter height: ";
         getline(cin, height);
-        dHeight = checkInput(height);
+        dHeight = stringToDouble(height);
         if (dHeight <= 0) {
             cout << "Please enter a positive number.\n";
         }
@@ -54,7 +54,7 @@ double getBase() {
     while (dBase <= 0) {
         cout << "Enter base: ";
         getline(cin, base);
-        dBase = checkInput(base);
+        dBase = stringToDouble(base);
         if (dBase <= 0) {
             cout << "Please enter a positive number.\n";
         }
@@ -84,7 +84,7 @@ void displayData( double h, double b, double a) {
 
 
 // Checks user input to ensure valid input (must be a number)
-double checkInput(string userInput) {
+double stringToDouble(string userInput) {
     double validatedNum = 0;
     try {
         size_t pos;

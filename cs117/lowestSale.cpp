@@ -30,7 +30,7 @@ double getSalesAmt(string);
 void findLowest(const map<string, double>&);
 vector<string> getSalesNamesFromFile(const string);
 vector<string> getSalesNamesDefault();
-double checkInput(string);
+double stringToDouble(string);
 
 int main(int argc, char *argv[]) {
     vector<string> salesNames; // create vector (dynamic array) to hold list of salespeople's names
@@ -72,7 +72,7 @@ double getSalesAmt(string name) {
         cout << "How much is the sales amount for: " << std::setw(10) << std::left << name << "$";
         getline(cin, userInput);
       
-        double validatedInput = checkInput(userInput);
+        double validatedInput = stringToDouble(userInput);
         if (validatedInput) {
             amt = validatedInput;
             if (amt <= 0) {
@@ -150,7 +150,7 @@ vector<string> getSalesNamesDefault() {
 
 
 // Checks user input to ensure valid input (must be a positive number)
-double checkInput(string userInput) {
+double stringToDouble(string userInput) {
     double validatedNum = 0;
   
     try {
