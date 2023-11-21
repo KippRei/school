@@ -1,7 +1,13 @@
-#include <iostream>
-#include <string>
+  #include <stdlib.h>
 
-int main() {
-    char greeting[] = {'H', 'e', 'l', 'l', 'o', '\0'};
-    std::cout << greeting;
-}
+  void f(void)
+  {
+     int* x = (int*)malloc(10 * sizeof(int));
+     x[10] = 0;        // problem 1: heap block overrun
+  }                    // problem 2: memory leak -- x not freed
+
+  int main(void)
+  {
+     f();
+     return 0;
+  }

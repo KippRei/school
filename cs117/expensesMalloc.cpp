@@ -26,12 +26,13 @@ int main() {
     int* arrLengthPtr = &arrLength;
     getArrLengthFromUser(arrLengthPtr);
 
-    double* expenseArr = new double[arrLength];
+    double* expenseArr = (double*)malloc(sizeof(double) * arrLength);
     getUserExpenses(expenseArr, arrLengthPtr);
     //bubbleSort(expenseArr, arrLengthPtr);
     selectionSort(expenseArr, arrLengthPtr);
     printTotal(expenseArr, arrLengthPtr);
 
+    free(expenseArr);
     return 0;
 }
 
