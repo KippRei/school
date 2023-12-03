@@ -1,22 +1,31 @@
+// Introductory comments: Marques Kipp Reitzel, CS 117, Sections 17136 & 17137
+
+// Program name: PasswordVerify
+
+// Description: Asks user for password
+// Description: Checks user password to ensure it meets password requirements
+// Description: [Requirements: 9 or more characters including uppercase, lowercase, number, and special character(s)]
+
+// Program Name submitted to Canvas: Reitzel_Marques_WordCount
+
+
 #include <iostream>
-#include <regex>
 #include <string>
 
 using std::cout;
 using std::cin;
 using std::string;
-using std::regex;
-using std::regex_search;
 
 void welcomeMsg();
-void verifyPassword();
-bool checkPassword(string);
+void validateUserPassword();
+string getUserInput();
+bool verifyPassword(string);
 
 
 // Main
 int main() {
     welcomeMsg();
-    verifyPassword();
+    validateUserPassword();
     return 0;
 }
 
@@ -30,39 +39,73 @@ void welcomeMsg() {
 }
 
 
-// Asks user for password and checks input
-void verifyPassword() {
-    cout << "Enter a password: ";
-    string userInput = "";
-    getline(cin, userInput);
-    checkPassword(userInput);
+// Asks for password from user and checks to ensure password meets requirements
+void validateUserPassword() {
+    bool verifiedPW = false;
+    while (!verifiedPW) {
+        string pw = getUserInput();
+        verifiedPW = verifyPassword(pw);
+    }
 }
 
 
-// Validates password
-bool checkPassword(string pw) {
-    bool pwOK = true;
-    if (!regex_search(pw, regex("[a-z]"))) {
-        pwOK = false;
-        cout << "It should contain at least one lowercase letter.\n";
-    }
-    if (!regex_search(pw, regex("[A-Z]"))) {
-        pwOK = false;
-        cout << "It should contain at least one uppercase letter.\n";
-    } 
-    if (!regex_search(pw, regex("[0-9]"))) {
-        pwOK = false;
-        cout << "It should contain at least one number.\n";
-    }
-    if (!regex_search(pw, regex("[:punct:]"))) {
-        pwOK = false;
-        cout << "It should contain at least one special character.\n";
+// Asks user for password and checks input
+string getUserInput() {
+    cout << "Enter a password: ";
+    string userInput = "";
+    getline(cin, userInput);
+    return userInput;
+}
+
+
+// Check user input
+bool verifyPassword(string pw) {
+    bool strLenOK = false;
+    bool upperChar = false;
+    bool lwrChar = false;
+    bool punctChar = false;
+    bool digitChar = false;
+
+    if (pw.length() >= 9) {
+        strLenOK = true;
     }
 
-    if (pwOK) {
+    for(char c : pw) {
+        if (isupper(c)) {
+            upperChar = true;
+        }
+        else if (islower(c)) {
+            lwrChar = true;
+        }
+        else if (isdigit(c)) {
+            digitChar = true;
+        }
+        else if (ispunct(c)) {
+            punctChar = true;
+        }
+    }
+
+    if (strLenOK && upperChar && lwrChar && digitChar && punctChar) {
+        cout << "The password is valid.\n";
         return true;
     }
     else {
-        verifyPassword();
+        cout << "The password is invalid.\n";
+        if (!strLenOK) {
+            cout << "It should be at least 9 characters long.\n";
+        }
+        if (!upperChar) {
+            cout << "It should contain at least one uppercase letter.\n";
+        }
+        if (!lwrChar) {
+            cout << "It should contain at least one lowercase letter.\n";
+        }
+        if (!digitChar) {
+            cout << "It should have at least one digit.\n";
+        }
+        if (!punctChar) {
+            cout << "It should have at least one special character.\n";
+        }
+        return false;
     }
 }
