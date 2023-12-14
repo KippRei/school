@@ -1,29 +1,23 @@
 #include <iostream>
-#include <string>
-#include <cctype>
-#include <string.h>
 
-using namespace std;
-struct Names
+int main() {
+  float finalScr = 0;
 
-{
+  for (float i = 70; i < 90; i += 0.5) {
+    float exam1 = 97;
+    float exam2 = 95;
+    float exam3 = 78.5;
+    finalScr = i;
+    float avg = (exam1 + exam2 + exam3) / 3;
+    if (finalScr > exam3) {
+      exam3 = (exam1 + exam2 + finalScr)/3;
+      avg = (exam1 + exam2 + exam3) / 3;
+    }
+    else {
+      finalScr = avg;
+    }
+    std::cout << "Final Score: " << finalScr << "\tTest Average: " << avg << "\t3rd Exam: " << exam3 << std::endl;
+  }
 
-   string first;
-
-   string last;
-
-};
-
-int main ()
-
-{
-
-  Names customer = {"asdf", "aa"};
-
-  cout << customer.first << endl;
-
-  cout << customer.last << endl;
-
-return 0;
-
+  return 0;
 }
