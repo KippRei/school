@@ -409,7 +409,7 @@ void saveBudgetResults(OperatingCosts* storeBudget, OperatingCosts* storeExpense
         else {
             string timeToAppend = getDateTime();
             fileName = "Budget_Report_" + timeToAppend + ".csv";
-            ofstream file(fileName);
+            file.open(fileName);
             validFileName = true;
         }
     } while (!validFileName);
