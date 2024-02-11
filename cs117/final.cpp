@@ -414,7 +414,7 @@ void saveBudgetResults(OperatingCosts* storeBudget, OperatingCosts* storeExpense
         }
     } while (!validFileName);
 
-    // Similar to display, this will go through the budget and expense structs and save values to file in CSV format
+    // Similar to displayResults, this will go through the budget and expense structs and save values to file in CSV format
     float totalOverUnder = 0;
     float totalBudget = 0;
     float totalExpenses = 0;
