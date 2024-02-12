@@ -38,11 +38,11 @@ int binSearch(Contact* contacts, int contactSize, char* searchName) {
     while (low < high) {
         int mid = (low + high - 1) / 2;
 
-        if (strcmp(contacts[mid].name, searchName) == 0) {
+        if (strcmp(searchName, contacts[mid].name) == 0) {
             return mid;
         }
 
-        if (strcmp(contacts[mid].name, searchName) > 0) {
+        if (strcmp(searchName, contacts[mid].name) > 0) {
             low = mid + 1;
         }
         else {
@@ -56,33 +56,33 @@ int binSearch(Contact* contacts, int contactSize, char* searchName) {
 int main() {
     //your program goes here.
     int numOfContacts;
-    cout << "Enter number of people: ";
+    //cout << "Enter number of people: ";
     cin >> numOfContacts;
     cin.ignore();
     Contact* contacts = new Contact[numOfContacts];
     
     for (int i = 0; i < numOfContacts; i++) {
-        cout << "Enter contact name: ";
+        //cout << "Enter contact name: ";
         cin.getline(contacts[i].name, MAX_USER_INPUT);
         
-        cout << "Enter contact number: ";
+        //cout << "Enter contact number: ";
         cin.getline(contacts[i].phone_number, MAX_USER_INPUT);
     }
 
     sort(contacts, numOfContacts);
 
     for (int i = 0; i < numOfContacts; i++) {
-        cout << contacts[i].name << " - " << contacts[i].phone_number << endl;
+        cout << contacts[i].name << " " << contacts[i].phone_number << endl;
     }
 
-    char* nameToSearch;
-    cout << "Enter name to search: ";
+    char nameToSearch[MAX_USER_INPUT];
+    //cout << "Enter name to search: ";
     cin.getline(nameToSearch, MAX_USER_INPUT);
 
     int foundContactIndex = binSearch(contacts, numOfContacts, nameToSearch);
 
     if (foundContactIndex >= 0) {
-        cout << contacts[foundContactIndex].name << " " << contacts[foundContactIndex].phone_number << endl;
+        cout << contacts[foundContactIndex].phone_number << endl;
     }
     else {
         cout << "Contact not found." << endl;
