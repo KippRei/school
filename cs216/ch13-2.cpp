@@ -88,7 +88,8 @@ int main() {
         cout << "Contact not found." << endl;
     }
 
-    delete(contacts);
+    //delete(contacts);
+    delete[] contacts; 
 
     return 0;
 }
