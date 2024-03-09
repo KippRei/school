@@ -13,6 +13,7 @@ class PlaylistNode {
         int GetSongLength();
         PlaylistNode* GetNext();
         void InsertAfter(PlaylistNode*);
+        void InsertAfter2(PlaylistNode*);
         void SetNext(PlaylistNode*);
         void PrintPlaylistNode();
 

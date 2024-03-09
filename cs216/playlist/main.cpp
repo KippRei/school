@@ -41,6 +41,7 @@ PlaylistNode* AddSong(PlaylistNode* headNode) {
             cout << "Please enter a number greater than 0." << endl;
         }
     }
+    cout << endl;
 
     PlaylistNode* newNode = new PlaylistNode(newID, newSongName, newArtistName, newSongLength);
     if (headNode == 0) {
@@ -78,7 +79,7 @@ PlaylistNode* RemoveSong(PlaylistNode* headNode) {
             PlaylistNode* currNode = headNode->GetNext();
             while (currNode != 0) {
                 if (currNode->GetID().compare(remID) == 0) {
-                    cout << "\"" << currNode->GetSongLength() << "\" removed." << endl;
+                    cout << "\"" << currNode->GetSongName() << "\" removed." << endl << endl;
                     lastNode->SetNext(currNode->GetNext());
                     delete(currNode);
                     break;
@@ -136,9 +137,16 @@ PlaylistNode* ChangeSongPos(PlaylistNode* headNode) {
             return headNode;
         }
     }
+    
     // "Cut" node out of list
-    nodeToSwap = currNode;
-    prevNode->SetNext(currNode->GetNext());
+    if (currPosInt <= 1) {
+        nodeToSwap = headNode;
+        headNode = headNode->GetNext();
+    }
+    else {
+        nodeToSwap = currNode;
+        prevNode->SetNext(currNode->GetNext());
+    }
 
 
     // Then put node in proper position in list
@@ -156,10 +164,10 @@ PlaylistNode* ChangeSongPos(PlaylistNode* headNode) {
                 moveTo = moveTo->GetNext();
             }
         }
-        nodeToSwap->InsertAfter(moveTo);
+        nodeToSwap->InsertAfter2(moveTo);
     }
 
-    cout << "\"" << nodeToSwap->GetSongName() << "\" moved to position " << newPos << endl;
+    cout << "\"" << nodeToSwap->GetSongName() << "\" moved to position " << newPos << endl << endl;
     
     // For testing
     Testing(headNode);
@@ -171,7 +179,7 @@ PlaylistNode* OutputFullPlaylist(PlaylistNode* headNode, string playlistTitle) {
     cout << playlistTitle << " - OUTPUT FULL PLAYLIST" << endl;
 
     if (headNode == 0) {
-        cout << "Playlist is empty" << endl;
+        cout << "Playlist is empty" << endl << endl;
         return headNode;
     }
 
@@ -187,17 +195,19 @@ PlaylistNode* OutputFullPlaylist(PlaylistNode* headNode, string playlistTitle) {
 }
 
 PlaylistNode* OutputSongsByArtist(PlaylistNode* headNode) {
+   cin.ignore();
     cout << "OUTPUT SONGS BY SPECIFIC ARTIST" << endl;
-    cout << "Enter artist's name:" << endl;
+    cout << "Enter artist's name:" << endl << endl;
     string artistName;
     getline(cin, artistName);
     int counter = 1;
     PlaylistNode* currNode = headNode;
     while(currNode != 0) {
         if (artistName.compare(currNode->GetArtistName()) == 0) {
-            cout << endl;
             SimpleOutput(currNode, counter);
         }
+        currNode = currNode->GetNext();
+        counter++;
     }
     return headNode;
 }
@@ -210,7 +220,7 @@ PlaylistNode* TotalTime(PlaylistNode* headNode) {
         total += currNode->GetSongLength();
         currNode = currNode->GetNext();
     }
-    cout << "Total Time: " << total << " seconds" << endl;
+    cout << "Total time: " << total << " seconds" << endl << endl;
     return headNode;
 }
 
@@ -245,9 +255,10 @@ int main() {
 
    cout << "Enter playlist's title:" << endl;
    getline(cin, playlistTitle);
+   cout << endl;
 
    while (option != 'q') {
-        PrintMenu(playlistTitle);
+        PrintMenu(playlistTitle);         
         cout << endl << "Choose an option:" << endl;
         cin >> option;
         head = ExecuteMenu(option, playlistTitle, head);
@@ -267,17 +278,17 @@ void SimpleOutput(PlaylistNode* currNode, int counter) {
 
 void Testing(PlaylistNode *headNode)
 {
-    PlaylistNode *currNode1 = headNode;
-    while (true)
-    {
-        cout << currNode1->GetID() << endl;
-        if (currNode1->GetNext() == 0)
-        {
-            break;
-        }
-        else
-        {
-            currNode1 = currNode1->GetNext();
-        }
-    }
+   //  PlaylistNode *currNode1 = headNode;
+   //  while (true)
+   //  {
+   //     cout << currNode1->GetID() << endl;
+   //     if (currNode1->GetNext() == 0)
+   //     {
+   //          break;
+   //     }
+   //     else
+   //     {
+   //          currNode1 = currNode1->GetNext();
+   //     }
+   //  }
 }
