@@ -1,6 +1,9 @@
 #include <iostream>
 #include "PlaylistNode.h"
 
+void Testing(PlaylistNode*);
+void SimpleOutput(PlaylistNode*, int);
+
 using namespace std;
 
 void PrintMenu(const string playlistTitle) {
@@ -39,8 +42,8 @@ PlaylistNode* AddSong(PlaylistNode* headNode) {
         }
     }
 
-    PlaylistNode* newNode = new PlaylistNode(newID, newArtistName, newSongName, newSongLength);
-    if (headNode == nullptr) {
+    PlaylistNode* newNode = new PlaylistNode(newID, newSongName, newArtistName, newSongLength);
+    if (headNode == 0) {
         headNode = newNode;
     }
     else {
@@ -53,16 +56,7 @@ PlaylistNode* AddSong(PlaylistNode* headNode) {
 
     
     // For testing
-    PlaylistNode* currNode = headNode;
-    while (true) {
-        cout << currNode->GetID() << endl;
-        if (currNode->GetNext() == 0) {
-            break;
-        }
-        else {
-            currNode = currNode->GetNext();
-        }
-    }
+    Testing(headNode);
 
    return headNode;
 }
@@ -75,15 +69,16 @@ PlaylistNode* RemoveSong(PlaylistNode* headNode) {
     cout << "Enter song's unique ID:" << endl;
     getline(cin, remID);
 
-    if (headNode != nullptr) {
+    if (headNode != 0) {
         if (headNode->GetID().compare(remID) == 0) {
             return headNode->GetNext();
         }
         else {
             PlaylistNode* lastNode = headNode;
             PlaylistNode* currNode = headNode->GetNext();
-            while (currNode != nullptr) {
+            while (currNode != 0) {
                 if (currNode->GetID().compare(remID) == 0) {
+                    cout << "\"" << currNode->GetSongLength() << "\" removed." << endl;
                     lastNode->SetNext(currNode->GetNext());
                     delete(currNode);
                     break;
@@ -95,16 +90,7 @@ PlaylistNode* RemoveSong(PlaylistNode* headNode) {
     }
     
     // For testing
-    PlaylistNode* currNode = headNode;
-    while (true) {
-        cout << currNode->GetID() << endl;
-        if (currNode->GetNext() == nullptr) {
-            break;
-        }
-        else {
-            currNode = currNode->GetNext();
-        }
-    }
+    Testing(headNode);
 
    return headNode;
 }
@@ -125,54 +111,107 @@ PlaylistNode* ChangeSongPos(PlaylistNode* headNode) {
             cout << "Please enter a positive, integer." << endl;
         }
     }
-    while (newPosInt < 0) {
+    while (true) {
         cout << "Enter new position for song:" << endl;
         getline(cin, newPos);
         try {
             newPosInt = stoi(newPos);
+            break;
         } catch (...) {
-            cout << "Please enter a positive, integer." << endl;
+            cout << "Please enter an integer." << endl;
         }
     }
 
-    PlaylistNode* prevNode = nullptr;
+
+    // First "cut" selected node out of list
+    PlaylistNode* prevNode = headNode;
     PlaylistNode* currNode = headNode; 
-    PlaylistNode* nodeToSwap = nullptr;
-    int count = 0; // Counts number of nodes (like index)
+    PlaylistNode* nodeToSwap = 0;
     //TODO: NO EXCEPTION HANDLING (OUT OF RANGE POSSIBLE)
-    for (int i = 0; i < currPosInt; i++) {
+    for (int i = 0; i < currPosInt - 1; i++) {
         prevNode = currNode;
         currNode = currNode->GetNext();
+        if (currNode == 0) {
+            cout << "Invalid selection." << endl;
+            return headNode;
+        }
     }
     // "Cut" node out of list
     nodeToSwap = currNode;
     prevNode->SetNext(currNode->GetNext());
 
-    if (newPosInt < 1) {
-        nodeToSwap->SetNext(headNode->GetNext());
+
+    // Then put node in proper position in list
+    if (newPosInt <= 1) {
+        nodeToSwap->SetNext(headNode);
         headNode = nodeToSwap;
     }
     else {
         PlaylistNode* moveTo = headNode;
-        for (int i = 0; i < newPosInt - 1; i++) {
-            moveTo = moveTo->GetNext();
+        for (int i = 0; i < newPosInt - 2; i++) {
+            if (moveTo->GetNext() == 0) {
+                break;
+            }
+            else {
+                moveTo = moveTo->GetNext();
+            }
         }
         nodeToSwap->InsertAfter(moveTo);
     }
+
+    cout << "\"" << nodeToSwap->GetSongName() << "\" moved to position " << newPos << endl;
     
     // For testing
-    PlaylistNode* currNode = headNode;
-    while (true) {
-        cout << currNode->GetID() << endl;
-        if (currNode->GetNext() == nullptr) {
-            break;
-        }
-        else {
-            currNode = currNode->GetNext();
-        }
+    Testing(headNode);
+
+    return headNode;
+}
+
+PlaylistNode* OutputFullPlaylist(PlaylistNode* headNode, string playlistTitle) {
+    cout << playlistTitle << " - OUTPUT FULL PLAYLIST" << endl;
+
+    if (headNode == 0) {
+        cout << "Playlist is empty" << endl;
+        return headNode;
     }
 
-   return headNode;
+    int counter = 1;
+    PlaylistNode* currNode = headNode;
+    while (currNode != 0) {
+        SimpleOutput(currNode, counter);
+        counter++;
+        currNode = currNode->GetNext();
+    }
+
+    return headNode;
+}
+
+PlaylistNode* OutputSongsByArtist(PlaylistNode* headNode) {
+    cout << "OUTPUT SONGS BY SPECIFIC ARTIST" << endl;
+    cout << "Enter artist's name:" << endl;
+    string artistName;
+    getline(cin, artistName);
+    int counter = 1;
+    PlaylistNode* currNode = headNode;
+    while(currNode != 0) {
+        if (artistName.compare(currNode->GetArtistName()) == 0) {
+            cout << endl;
+            SimpleOutput(currNode, counter);
+        }
+    }
+    return headNode;
+}
+
+PlaylistNode* TotalTime(PlaylistNode* headNode) {
+    PlaylistNode* currNode = headNode;
+    int total = 0;
+    cout << "OUTPUT TOTAL TIME OF PLAYLIST (IN SECONDS)" << endl;
+    while (currNode != 0) {
+        total += currNode->GetSongLength();
+        currNode = currNode->GetNext();
+    }
+    cout << "Total Time: " << total << " seconds" << endl;
+    return headNode;
 }
 
 PlaylistNode* ExecuteMenu(char option, string playlistTitle, PlaylistNode* headNode) {
@@ -185,18 +224,27 @@ PlaylistNode* ExecuteMenu(char option, string playlistTitle, PlaylistNode* headN
     else if (option == 'c') {
         return ChangeSongPos(headNode);
     }
+    else if (option == 'o') {
+        return OutputFullPlaylist(headNode, playlistTitle);
+    }
+    else if (option == 's') {
+        return OutputSongsByArtist(headNode);
+    }
+    else if (option == 't') {
+        return TotalTime(headNode);
+    }
     else {
         return headNode;
     }
 }
 
 int main() {
-   PlaylistNode* head = nullptr;
+   PlaylistNode* head = 0;
    string playlistTitle = "none";
    char option;
 
    cout << "Enter playlist's title:" << endl;
-   cin >> playlistTitle;
+   getline(cin, playlistTitle);
 
    while (option != 'q') {
         PrintMenu(playlistTitle);
@@ -208,3 +256,28 @@ int main() {
    return 0;
 }
 
+void SimpleOutput(PlaylistNode* currNode, int counter) { 
+        cout << counter << "." << endl;
+        cout << "Unique ID: " << currNode->GetID() << endl;
+        cout << "Song Name: " << currNode->GetSongName() << endl;
+        cout << "Artist Name: " << currNode->GetArtistName() << endl;
+        cout << "Song Length (in seconds): " << currNode->GetSongLength() << endl;
+        cout << endl;
+}
+
+void Testing(PlaylistNode *headNode)
+{
+    PlaylistNode *currNode1 = headNode;
+    while (true)
+    {
+        cout << currNode1->GetID() << endl;
+        if (currNode1->GetNext() == 0)
+        {
+            break;
+        }
+        else
+        {
+            currNode1 = currNode1->GetNext();
+        }
+    }
+}
