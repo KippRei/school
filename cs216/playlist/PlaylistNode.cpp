@@ -36,10 +36,15 @@ PlaylistNode* PlaylistNode::GetNext() {
     return nextNodePtr;
 }
 
-void PlaylistNode::InsertAfter(PlaylistNode* nodePtr) {
+void PlaylistNode::InsertAfter2(PlaylistNode* nodePtr) {
     PlaylistNode* temp = nodePtr->GetNext();
     nodePtr->SetNext(this);
-    this->SetNext(temp);
+    SetNext(temp);
+}
+
+void PlaylistNode::InsertAfter(PlaylistNode* newNode) {
+   newNode->SetNext(GetNext());
+   SetNext(newNode);
 }
 
 void PlaylistNode::SetNext(PlaylistNode* nodePtr) {
