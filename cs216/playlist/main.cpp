@@ -111,7 +111,68 @@ PlaylistNode* RemoveSong(PlaylistNode* headNode) {
 
 // Change position of song in playlist
 PlaylistNode* ChangeSongPos(PlaylistNode* headNode) {
-    // TODO: Implement
+    cin.ignore();
+    string currPos, newPos;
+    int currPosInt = -1;
+    int newPosInt = -1;
+    cout << "CHANGE POSITION OF SONG" << endl;
+    while (currPosInt < 0) {
+        cout << "Enter song's current position:" << endl;
+        getline(cin, currPos);
+        try {
+            currPosInt = stoi(currPos);
+        } catch (...) {
+            cout << "Please enter a positive, integer." << endl;
+        }
+    }
+    while (newPosInt < 0) {
+        cout << "Enter new position for song:" << endl;
+        getline(cin, newPos);
+        try {
+            newPosInt = stoi(newPos);
+        } catch (...) {
+            cout << "Please enter a positive, integer." << endl;
+        }
+    }
+
+    PlaylistNode* prevNode = nullptr;
+    PlaylistNode* currNode = headNode; 
+    PlaylistNode* nodeToSwap = nullptr;
+    int count = 0; // Counts number of nodes (like index)
+    //TODO: NO EXCEPTION HANDLING (OUT OF RANGE POSSIBLE)
+    for (int i = 0; i < currPosInt; i++) {
+        prevNode = currNode;
+        currNode = currNode->GetNext();
+    }
+    // "Cut" node out of list
+    nodeToSwap = currNode;
+    prevNode->SetNext(currNode->GetNext());
+
+    if (newPosInt < 1) {
+        nodeToSwap->SetNext(headNode->GetNext());
+        headNode = nodeToSwap;
+    }
+    else {
+        PlaylistNode* moveTo = headNode;
+        for (int i = 0; i < newPosInt - 1; i++) {
+            moveTo = moveTo->GetNext();
+        }
+        nodeToSwap->InsertAfter(moveTo);
+    }
+    
+    // For testing
+    PlaylistNode* currNode = headNode;
+    while (true) {
+        cout << currNode->GetID() << endl;
+        if (currNode->GetNext() == nullptr) {
+            break;
+        }
+        else {
+            currNode = currNode->GetNext();
+        }
+    }
+
+   return headNode;
 }
 
 PlaylistNode* ExecuteMenu(char option, string playlistTitle, PlaylistNode* headNode) {
