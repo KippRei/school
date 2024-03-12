@@ -72,7 +72,10 @@ PlaylistNode* RemoveSong(PlaylistNode* headNode) {
 
     if (headNode != 0) {
         if (headNode->GetID().compare(remID) == 0) {
-            return headNode->GetNext();
+            PlaylistNode* newHead = headNode->GetNext();
+            cout << "\"" << headNode->GetSongName() << "\" removed." << endl << endl;
+            delete(headNode);
+            return newHead;
         }
         else {
             PlaylistNode* lastNode = headNode;
@@ -269,10 +272,11 @@ int main() {
 
 void SimpleOutput(PlaylistNode* currNode, int counter) { 
         cout << counter << "." << endl;
-        cout << "Unique ID: " << currNode->GetID() << endl;
-        cout << "Song Name: " << currNode->GetSongName() << endl;
-        cout << "Artist Name: " << currNode->GetArtistName() << endl;
-        cout << "Song Length (in seconds): " << currNode->GetSongLength() << endl;
+        currNode->PrintPlaylistNode();
+        // cout << "Unique ID: " << currNode->GetID() << endl;
+        // cout << "Song Name: " << currNode->GetSongName() << endl;
+        // cout << "Artist Name: " << currNode->GetArtistName() << endl;
+        // cout << "Song Length (in seconds): " << currNode->GetSongLength() << endl;
         cout << endl;
 }
 
