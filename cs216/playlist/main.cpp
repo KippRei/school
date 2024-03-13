@@ -131,6 +131,7 @@ PlaylistNode* ChangeSongPos(PlaylistNode* headNode) {
     PlaylistNode* prevNode = headNode;
     PlaylistNode* currNode = headNode; 
     PlaylistNode* nodeToSwap = 0;
+    
     //TODO: NO EXCEPTION HANDLING (OUT OF RANGE POSSIBLE)
     for (int i = 0; i < currPosInt - 1; i++) {
         prevNode = currNode;
@@ -228,26 +229,21 @@ PlaylistNode* TotalTime(PlaylistNode* headNode) {
 }
 
 PlaylistNode* ExecuteMenu(char option, string playlistTitle, PlaylistNode* headNode) {
-    if (option == 'a') {
-        return AddSong(headNode);
-    }
-    else if (option == 'd') {
-        return RemoveSong(headNode);
-    }
-    else if (option == 'c') {
-        return ChangeSongPos(headNode);
-    }
-    else if (option == 'o') {
-        return OutputFullPlaylist(headNode, playlistTitle);
-    }
-    else if (option == 's') {
-        return OutputSongsByArtist(headNode);
-    }
-    else if (option == 't') {
-        return TotalTime(headNode);
-    }
-    else {
-        return headNode;
+    switch (option) {
+        case 'a':
+            return AddSong(headNode);
+        case 'd':
+            return RemoveSong(headNode);
+        case 'c':
+            return ChangeSongPos(headNode);
+        case 'o':
+            return OutputFullPlaylist(headNode, playlistTitle);
+        case 's':
+            return OutputSongsByArtist(headNode);
+        case 't':
+            return TotalTime(headNode);
+        default:
+            return headNode;
     }
 }
 

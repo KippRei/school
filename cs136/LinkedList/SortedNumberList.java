@@ -7,25 +7,6 @@ public class SortedNumberList {
 		head = null;
 		tail = null;
 	}
-
-   // Optional: Add any desired private methods here
-   private void insertAfter(Node currNode, Node newNode) {
-	if (currNode == tail) {
-		currNode.setNext(newNode);
-		newNode.setPrevious(currNode);
-		tail = newNode;
-	}
-	else if (currNode == head) {
-		currNode.setPrevious(newNode);
-		newNode.setNext(currNode);
-		head = newNode;
-	}
-	else {
-		newNode.setNext(currNode.getNext());
-		newNode.setPrevious(currNode);
-		currNode.setNext(newNode);
-	}
-   }
    
 	// Inserts the number into the list in the correct position such that the
 	// list remains sorted in ascending order.
