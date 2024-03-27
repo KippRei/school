@@ -1,6 +1,7 @@
 mod notmain;
 
 fn main() {
-    let x : i8::<T> = notmain::op();
+    let mut x : i8 = 5;
+    notmain::get_num(&mut x);
     println!("{}",x);
 }
