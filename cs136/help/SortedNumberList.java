@@ -81,4 +81,14 @@ public class SortedNumberList {
 	   }
 	   return false;
 	}
+
+	public void reverse(Node currNode, Node prevNode) {
+		if (currNode.getNext() == null) {
+			head = currNode;
+			currNode.setNext(prevNode);
+		}
+		else {
+			// TODO: recursive?
+		}
+	}
 }
