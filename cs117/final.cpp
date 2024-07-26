@@ -1,3 +1,13 @@
+// Introductory comments: Marques Kipp Reitzel, CS 117, Sections 17136 & 17137
+
+// Program name: Monthly Expense Calculator (Final)
+
+// Description: Asks for monthly budget then expenditures
+// Description: Calculates and displays amount over/under budget
+// Description: Budget/Expense report can be saves as .csv
+
+// Program Name submitted to Canvas: Reitzel_Marques_Final
+
 #include <iostream>
 #include <iomanip>
 #include <fstream>
