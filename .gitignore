@@ -7,6 +7,7 @@
 *.pkg
 *.pyz
 
+txt/open.py
 cs117/bool.cpp
 cs117/a.out
 cs216/a.out
@@ -14,7 +15,7 @@ rustprac/guess_game/target/*
 *.class
 *.csv
 *.s
-*.o
+*.out
 .vscode/
 rustprac/
 photo_edit/
