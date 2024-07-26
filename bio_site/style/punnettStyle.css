@@ -1,0 +1,22 @@
+#wrapper {
+    width: 700px;
+    overflow: hidden; /* will contain if #first is longer than #second */
+}
+#GenoResults {
+    width: 375px;
+    float:left; /* add this */
+}
+#PhenoResults {
+}
+
+@media only screen and (max-width: 600px) {
+    #wrapper {
+        width: 100%;
+    }
+    #GenoResults {
+        float:left; /* add this */
+    }
+    #PhenoResults {
+        float:left; /* add this */
+    }
+}

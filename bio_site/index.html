@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<head>
+    <title>Kipp's Lab</title>
+    <link rel="stylesheet" href="./style/punnettStyle.css"> 
+    <script src="./scripts/punnett.js"></script>
+</head>
+<body>
+<div>
+    <label for="P1">Enter P1 Genotype: </label>
+    <input type="text" id="P1" value="AaBb">
+</div>
+<div>
+    <label for="P2">Enter P2 Genotype: </label>
+    <input type="text" id="P2" value="AaBb">
+</div>
+<div style="visibility: hidden";>
+    <label for="DomType">Inheritance Type: </label>
+    <select id="DomType">
+        <option value="COMPLETE">Complete</option>
+        <option value="INCOMPLETE">Incomplete</option>
+        <option value="CODOMINANCE">Codominance</option>
+    </select>
+</div>
+<div>
+    <button onclick="CalculateF1()">Calculate F1</button>
+</div>
+<div id="wrapper">
+    <div style="color: black" id="GenoResults"></div>
+    <div id="PhenoResults"></div>
+</div>
+</body>
+</html>
