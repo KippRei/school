@@ -5,10 +5,10 @@ PlaylistNode::PlaylistNode() {
     songName = "none";
     artistName = "none";
     songLength = 0;
-    nextNodePtr = nullptr;
+    nextNodePtr = 0;
 }
 
-PlaylistNode::PlaylistNode(string id, string aName, string sName, int sLen) {
+PlaylistNode::PlaylistNode(string id, string sName, string aName, int sLen) {
     uniqueID = id;
     artistName = aName;
     songName = sName;
@@ -36,10 +36,15 @@ PlaylistNode* PlaylistNode::GetNext() {
     return nextNodePtr;
 }
 
-void PlaylistNode::InsertAfter(PlaylistNode* nodePtr) {
+void PlaylistNode::InsertAfter2(PlaylistNode* nodePtr) {
     PlaylistNode* temp = nodePtr->GetNext();
     nodePtr->SetNext(this);
-    this->SetNext(temp);
+    SetNext(temp);
+}
+
+void PlaylistNode::InsertAfter(PlaylistNode* newNode) {
+   newNode->SetNext(GetNext());
+   SetNext(newNode);
 }
 
 void PlaylistNode::SetNext(PlaylistNode* nodePtr) {
