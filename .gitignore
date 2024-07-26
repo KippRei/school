@@ -7,15 +7,31 @@
 *.pkg
 *.pyz
 
+<<<<<<< HEAD
 txt/open.py
+=======
+>>>>>>> e94e2ed6d67269e220132fe818ef32a85a262ae2
 cs117/bool.cpp
 cs117/a.out
 cs216/a.out
 rustprac/guess_game/target/*
 *.class
+<<<<<<< HEAD
 *.csv
 *.s
 *.out
 .vscode/
 rustprac/
 photo_edit/
+=======
+<<<<<<< HEAD
+*.csv
+=======
+*.csv
+*.s
+*.o
+.vscode/
+rustprac/
+photo_edit/
+>>>>>>> 48522c3dbf58e48affe2a2c9dd51bae528270abf
+>>>>>>> e94e2ed6d67269e220132fe818ef32a85a262ae2
